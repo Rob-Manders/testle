@@ -1,42 +1,38 @@
-import { Guess } from "./types"
+import {Callback, Guess} from "./types"
 import {TestleDOM} from './testle-dom.ts'
 
-type Callback = () => void
-
 export default class TestleUI {
-	private eventCallback: Callback = () => {	}
-	private dom: TestleDOM
+	private inputCallback: Callback = () => {}
+	private resetCallback: Callback = () => {}
 
-	private guesses: Guess[] = []
+	private dom: TestleDOM
 
 	constructor(wrapper: HTMLElement) {
 		this.dom = new TestleDOM(wrapper)
-		this.dom.initialise()
-	}
-
-	public reset() {
-		this.guesses = []
-	}
-
-	public updateGuesses(guesses: Guess[]): void {
-		this.guesses = guesses
+		this.dom.initialise(
+			() => this.handleInput(this.inputCallback),
+			() => this.resetCallback(),
+		)
 	}
 
 	public onInput(callback: Callback) {
-		this.eventCallback = callback
+		this.inputCallback = callback
+	}
 
-		const handler = () => {
-			this.handleInput(this.eventCallback)
-		}
+	public onReset(callback: Callback) {
+		this.resetCallback = callback
+	}
 
-		this.dom.button?.removeEventListener('click', handler)
-		this.dom.button?.addEventListener('click', handler)
+	public reset() {
+		this.dom.updateGuesses([])
+	}
+
+	public updateGuesses(guesses: Guess[]): void {
+		this.dom.updateGuesses(guesses)
 	}
 
 	private handleInput(callback: Callback) {
 		// Handle user input...
-
-		console.log(this.guesses)
 
 		callback()
 	}

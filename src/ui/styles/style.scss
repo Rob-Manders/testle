@@ -5,4 +5,10 @@
         border: none;
         border-radius: 5px;
     }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
 }
