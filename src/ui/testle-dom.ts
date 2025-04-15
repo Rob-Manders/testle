@@ -24,10 +24,7 @@ export class TestleDOM {
   }
 
   public updateGuesses(guesses: Guess[]): void {
-    const guessElements = this.guesses.getElementsByClassName('testle-dom__guess')
-    for (const el of guessElements) {
-      this.guesses.removeChild(el)
-    }
+    this.resetGuesses()
 
     if (guesses.length === 0) {
       return
@@ -35,6 +32,13 @@ export class TestleDOM {
 
     for (const guess of guesses) {
       this.addGuess(guess)
+    }
+  }
+
+  public resetGuesses(): void {
+    const guessElements = this.guesses.getElementsByClassName('testle-dom__guess')
+    for (const el of guessElements) {
+      this.guesses.removeChild(el)
     }
   }
 
@@ -71,6 +75,7 @@ export class TestleDOM {
     input.classList.add(constants.CLASSNAME_INPUT)
 
     const submitButton = document.createElement('button')
+    submitButton.id = 'submit-button'
     submitButton.classList.add(constants.CLASSNAME_BUTTON)
     submitButton.innerText = 'Submit'
 
@@ -85,6 +90,7 @@ export class TestleDOM {
     })
 
     const resetButton = document.createElement('button')
+    resetButton.id = 'reset-button'
     resetButton.classList.add(constants.CLASSNAME_BUTTON)
     resetButton.innerText = 'Reset'
 
