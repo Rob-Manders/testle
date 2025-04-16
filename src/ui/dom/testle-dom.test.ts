@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from 'vitest'
-import * as constants from './constants.ts'
+import * as constants from '../constants.ts'
 import {TestleDOM} from "./testle-dom.ts"
-import {Status} from "./types.ts";
+import {Status} from "../types.ts";
 
 describe('Testle DOM', () => {
     test('Initialise the DOM', () => {

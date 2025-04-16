@@ -1,8 +1,8 @@
-import {Callback, Guess} from "./types"
-import {TestleDOM} from './testle-dom.ts'
+import {Callback, Guess, InputCallback} from "../types.ts"
+import {TestleDOM} from '../dom/testle-dom.ts'
 
 export default class TestleUI {
-	private inputCallback: Callback = () => {}
+	private inputCallback: InputCallback = () => {}
 	private resetCallback: Callback = () => {}
 
 	private dom: TestleDOM
@@ -24,16 +24,16 @@ export default class TestleUI {
 	}
 
 	public reset() {
-		this.dom.updateGuesses([])
+		this.dom.resetGuesses()
 	}
 
 	public updateGuesses(guesses: Guess[]): void {
 		this.dom.updateGuesses(guesses)
 	}
 
-	private handleInput(callback: Callback) {
-		// Handle user input...
+	private handleInput(callback: InputCallback) {
+		const input = this.dom.getInputValue()
 
-		callback()
+		callback(input)
 	}
 }

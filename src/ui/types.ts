@@ -11,3 +11,4 @@ export interface Letter {
 
 export type Guess = Letter[]
 export type Callback = () => void
+export type InputCallback = (input: string) => void
