@@ -1,1 +1,1 @@
-export { default as TestleUI } from './ui/testle-ui.ts'
+export {default as TestleUI} from './ui/testle-ui.ts'

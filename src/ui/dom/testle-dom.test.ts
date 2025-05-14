@@ -1,53 +1,107 @@
-import { describe, expect, test, vi } from 'vitest'
+import {describe, expect, test, vi} from 'vitest'
 import * as constants from '../constants.ts'
 import {TestleDOM} from "./testle-dom.ts"
-import {Status} from "../types.ts";
+import {MessageType, Status} from "../types.ts";
 
-describe('Testle DOM', () => {
-    test('Initialise the DOM', () => {
+test('Initialise the DOM', () => {
+    const wrapper = document.createElement('div')
+    const testleDom = new TestleDOM(wrapper)
+
+    testleDom.initialise(() => {
+    }, () => {
+    })
+
+    expect(wrapper.classList.contains(constants.CLASSNAME_WRAPPER)).to.equal(true)
+    expect(wrapper.children.item(0).classList.contains(constants.CLASSNAME_GUESSES)).to.equal(true)
+    expect(wrapper.children.item(1).classList.contains(constants.CLASSNAME_FORM_WRAPPER)).to.equal(true)
+})
+
+describe('Testle DOM - Guesses', () => {
+	test('Update Guesses', () => {
+		const wrapper = document.createElement('div')
+		const testleDom = new TestleDOM(wrapper)
+
+		testleDom.initialise(() => {
+		}, () => {
+		})
+
+		const guesses = [
+			[{letter: 'T', status: Status.Correct}],
+		]
+
+		testleDom.updateGuesses(guesses)
+
+		const hasGuess = wrapper
+			.children.item(0)
+			.children.item(0)
+			.classList.contains(constants.CLASSNAME_GUESS)
+
+		expect(hasGuess).to.equal(true)
+	})
+
+	test('Reset Guesses', () => {
+		const wrapper = document.createElement('div')
+		const testleDom = new TestleDOM(wrapper)
+
+		testleDom.initialise(() => {
+		}, () => {
+		})
+
+		const guesses = [
+			[{letter: 'T', status: Status.Correct}],
+		]
+
+		testleDom.updateGuesses(guesses)
+		testleDom.resetGuesses()
+
+		expect(wrapper.children.item(0)?.children.length).to.equal(0)
+	})
+
+})
+
+describe('Testle DOM - Message', () => {
+    test('Error', () => {
         const wrapper = document.createElement('div')
         const testleDom = new TestleDOM(wrapper)
 
         testleDom.initialise(() => {}, () => {})
 
-        expect(wrapper.classList.contains(constants.CLASSNAME_WRAPPER)).to.equal(true)
-        expect(wrapper.children.item(0).classList.contains(constants.CLASSNAME_GUESSES)).to.equal(true)
-        expect(wrapper.children.item(1).classList.contains(constants.CLASSNAME_FORM_WRAPPER)).to.equal(true)
+        const message = "Test Message"
+
+        testleDom.setMessage(message, MessageType.Error)
+
+        expect(wrapper.children.item(3).classList.contains(constants.CLASSNAME_MESSAGE)).to.equal(true)
+		expect(wrapper.children.item(3).classList.contains(constants.CLASSNAME_MESSAGE_ERROR)).to.equal(true)
+        expect(wrapper.children.item(3).textContent.trim()).to.equal(message)
     })
 
-    test('Update Guesses', () => {
-        const wrapper = document.createElement('div')
-        const testleDom = new TestleDOM(wrapper)
+	test('Warning', () => {
+		const wrapper = document.createElement('div')
+		const testleDom = new TestleDOM(wrapper)
 
-        testleDom.initialise(() => {}, () => {})
+		testleDom.initialise(() => {}, () => {})
 
-        const guesses = [
-            [{ letter: 'T', status: Status.Correct }],
-        ]
+		const message = "Test Message"
 
-        testleDom.updateGuesses(guesses)
+		testleDom.setMessage(message, MessageType.Error)
 
-        const hasGuess = wrapper
-            .children.item(0)
-            .children.item(0)
-            .classList.contains(constants.CLASSNAME_GUESS)
+		expect(wrapper.children.item(3).classList.contains(constants.CLASSNAME_MESSAGE)).to.equal(true)
+		expect(wrapper.children.item(3).classList.contains(constants.CLASSNAME_MESSAGE_WARNING)).to.equal(true)
+		expect(wrapper.children.item(3).textContent.trim()).to.equal(message)
+	})
 
-        expect(hasGuess).to.equal(true)
-    })
+	test('Success', () => {
+		const wrapper = document.createElement('div')
+		const testleDom = new TestleDOM(wrapper)
 
-    test('Reset Guesses', () => {
-        const wrapper = document.createElement('div')
-        const testleDom = new TestleDOM(wrapper)
+		testleDom.initialise(() => {}, () => {})
 
-        testleDom.initialise(() => {}, () => {})
+		const message = "Test Message"
 
-        const guesses = [
-            [{ letter: 'T', status: Status.Correct }],
-        ]
+		testleDom.setMessage(message, MessageType.Error)
 
-        testleDom.updateGuesses(guesses)
-        testleDom.resetGuesses()
-
-        expect(wrapper.children.item(0)?.children.length).to.equal(0)
-    })
+		expect(wrapper.children.item(3).classList.contains(constants.CLASSNAME_MESSAGE)).to.equal(true)
+		expect(wrapper.children.item(3).classList.contains(constants.CLASSNAME_MESSAGE_SUCCESS)).to.equal(true)
+		expect(wrapper.children.item(3).textContent.trim()).to.equal(message)
+	})
 })

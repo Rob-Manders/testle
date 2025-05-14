@@ -1,0 +1,26 @@
+@use "palette";
+
+.testle-dom {
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	&__input {
+		outline: none;
+		background-color: transparent;
+		color: palette.$primary;
+		text-align: center;
+		padding: 0.25rem 0.5rem;
+		border: none;
+		border-bottom: 1px solid palette.$secondary;
+		text-transform: uppercase;
+		transition: 150ms ease-in-out;
+
+		&:focus {
+			border-bottom: 1px solid palette.$green;
+		}
+	}
+}

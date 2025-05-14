@@ -1,14 +1,33 @@
-.testle-dom {
-    &__input {
-        background: #202020;
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 5px;
-    }
+@use "palette";
+@use "fonts";
+@use "form";
+@use "guesses";
 
-    &__form {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	font-family: "CutiveMono", sans-serif;
+	font-weight: 400;
+	font-size: 1.5rem;
+}
+
+body {
+	background-color: palette.$background;
+}
+
+.testle-dom__wrapper {
+	display: flex;
+	flex-direction: column;
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+.testle-dom__button {
+	cursor: pointer;
+	background-color: #2b2c31;
+	color: #d8d8d8;
+	width: 100%;
+	border: none;
+	border-radius: 10px;
 }

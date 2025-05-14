@@ -4,6 +4,12 @@ export enum Status {
 	NotInWord
 }
 
+export enum MessageType {
+	Error,
+	Warning,
+	Success
+}
+
 export interface Letter {
 	letter: string
 	status: Status

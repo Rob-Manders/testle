@@ -1,0 +1,15 @@
+@use "palette";
+
+.testle-dom__letter {
+	&--correct {
+		color: palette.$green;
+	}
+
+	&--incorrect {
+		color: palette.$red;
+	}
+
+	&--not-in-word {
+		color: palette.$grey;
+	}
+}
